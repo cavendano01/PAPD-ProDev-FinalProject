@@ -55,6 +55,7 @@ services:
              MYSQL_PASSWORD: padp_pw
 
     streamlit:
+        build:  ./Dockerfiles/streamlit
         command: "streamlit run app.py"
         ports:
             - "8501:8501"
