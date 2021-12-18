@@ -44,15 +44,15 @@ services:
          image: mysql:5.7
          volumes:
              #- ./mysql/db_data:/var/lib/mysql
-             - ./Dockerfiles/schema.sql:/docker-entrypoint-initdb.d/1.sql
+             - ./mysql/scripts/schema.sql:/docker-entrypoint-initdb.d/1.sql
          restart: always
          ports:
              - 3306:3306
          environment:
-             MYSQL_ROOT_PASSWORD: padp_rpw
-             MYSQL_DATABASE: padp_db
-             MYSQL_USER: padp_db
-             MYSQL_PASSWORD: padp_pw
+             MYSQL_ROOT_PASSWORD: supersecretpass
+             MYSQL_DATABASE: covid19
+             MYSQL_USER: covid19
+             MYSQL_PASSWORD: secretpass
 
     streamlit:
         build: ./Dockerfiles/streamlit

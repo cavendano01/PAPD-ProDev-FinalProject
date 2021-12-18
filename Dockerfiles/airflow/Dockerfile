@@ -30,6 +30,9 @@ COPY requirements.txt .
 # Disable noisy "Handling signal" log messages:
 # ENV GUNICORN_CMD_ARGS --log-level WARNING
 
+RUN /usr/local/bin/python -m pip install --upgrade pip
+RUN /usr/local/bin/python -m pip install --upgrade pip
+
 RUN set -ex \
     && buildDeps=' \
         freetds-dev \

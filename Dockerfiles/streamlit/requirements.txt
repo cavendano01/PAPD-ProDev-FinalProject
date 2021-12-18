@@ -1,5 +1,11 @@
+pandas
+structlog
 streamlit>=0.65.2
 pydicom>=2.0.0
 pathlib
 sqlalchemy
 mysql-connector-python
+pydeck
+plotly
+plotly.express
+streamlit-aggrid

@@ -5,3 +5,7 @@ pydicom>=2.0.0
 pathlib
 sqlalchemy
 mysql-connector-python
+pydeck
+plotly
+plotly.express
+streamlit-aggrid
