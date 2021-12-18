@@ -2,6 +2,9 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import mysql.connector as connection
+import pydeck as pdk
+import plotly.express as px
+
 
 # Configuring Website High level features
 st.set_page_config(
@@ -17,7 +20,7 @@ st.set_page_config(
 st.title('COVID19 Dashboard')
 
 # Creating Data Frame
-
+# @st.cache(allow_output_mutation=True) Convertir a función que permita uso de cache
 mydb = connection.connect(host="mysql_db", database='covid19', user="covid19", passwd="secretpass", use_pure=True)
 query = "Select * from covid19.data;"
 df = pd.read_sql(query, mydb)
@@ -80,8 +83,13 @@ def filters(df, start_date, end_date, countries, states):
 
 # Creating Filtered Dataframe
 filter_df = filters(df, start_date_filter, end_date_filter, countries_filter, states_filter)
+#filter_confirmed = get_cases_count(filter_df, ['country', 'state', 'lat', 'lon'], ["confirmed"])
+#filter_recovered = get_cases_count(filter_df, ['country', 'state', 'lat', 'lon'], ["recovered"])
+#filter_death = get_cases_count(filter_df, ['country', 'state', 'lat', 'lon'], ["deaths"])
+
 # Metric Summary when applying all other variables
 num_confirmed = filter_df.loc[(df['status'] == 'confirmed'), 'cases'].sum()
+#num_confirmed = get_cases_count(filter_df, ['country', 'state', 'lat', 'lon'], ["confirmed"])
 num_deaths = filter_df.loc[(df['status'] == 'deaths'), 'cases'].sum()
 num_recover = filter_df.loc[(df['status'] == 'recovered'), 'cases'].sum()
 
@@ -89,26 +97,26 @@ num_recover = filter_df.loc[(df['status'] == 'recovered'), 'cases'].sum()
 col1, col2, col3 = st.columns([1, 1, 1])
 with col1:
     st.metric(label="Confirmed", value=num_confirmed)
+
 with col2:
     st.metric(label="Decesased", value=num_deaths)
 with col3:
     st.metric(label="Recovered", value=num_recover)
 
+
+
+map_df = pd.DataFrame(filter_df.dropna(subset=['lat','lon']))
+
+fig = px.scatter_mapbox(map_df, lat="lat", lon="lon", hover_name="country", hover_data=["state", "cases"],
+                        color_discrete_sequence=["fuchsia"], zoom=3, height=300)
+fig.update_layout(mapbox_style="open-street-map")
+fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+fig.show()
+st.plotly_chart(fig)
+
 st.table(filter_df.head(8))
 
-# One Column Map
-st.map(data=filter_df.loc[df['cases']].sum(), zoom=None, use_container_width=True)
 
-# 2 Column Charts
-col1, col2 = st.columns([1, 1])
-col2.subheader("Map of COVID prevalence")
 
-# Populating Dashboard Layout
-with col1:
-    col1.subheader("Map of COVID prevalence")
 
-with col2:
-    col2.subheader("Map of COVID prevalence")
-    st.area_chart(filter_df)
 
-# Hasta aquí voy bien
