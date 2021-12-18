@@ -15,7 +15,7 @@ services:
           - ./postgres/pgdata:/var/lib/postgresql/data/pgdata
 
     airflow:
-        build:  ./Dockerfiles
+        build:  ./Dockerfiles/airflow
         restart: always
         depends_on:
             - postgres
@@ -44,18 +44,18 @@ services:
          image: mysql:5.7
          volumes:
              #- ./mysql/db_data:/var/lib/mysql
-             - ./Dockerfiles/scripts/schema.sql:/docker-entrypoint-initdb.d/1.sql
+             - ./Dockerfiles/schema.sql:/docker-entrypoint-initdb.d/1.sql
          restart: always
          ports:
              - 3306:3306
          environment:
-             MYSQL_ROOT_PASSWORD: padp_RPW
+             MYSQL_ROOT_PASSWORD: padp_rpw
              MYSQL_DATABASE: padp_db
-             MYSQL_USER: padp_user
+             MYSQL_USER: padp_db
              MYSQL_PASSWORD: padp_pw
 
     streamlit:
-        build:  ./Dockerfiles/streamlit
+        build: ./Dockerfiles/streamlit
         command: "streamlit run app.py"
         ports:
             - "8501:8501"

@@ -20,8 +20,8 @@ DF_COLUMNS = {
     "Long" : "lon"
 }
 
-FILE_CONNECTION_NAME = 'monitor_file'
-CONNECTION_DB_NAME = 'mysql_db'
+FILE_CONNECTION_NAME = 'fs_default'
+CONNECTION_DB_NAME = 'mysql_default'
 
 def etl_process(**kwargs):
     mysql_connection = MySqlHook(mysql_conn_id=CONNECTION_DB_NAME).get_sqlalchemy_engine()

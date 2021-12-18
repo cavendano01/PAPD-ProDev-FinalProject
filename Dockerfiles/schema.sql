@@ -1,4 +1,4 @@
-CREATE TABLE covid19.merged(
+CREATE TABLE covid19.global_data(
     id int primary key auto_increment,
     country varchar(100),
     state varchar(100),
@@ -8,5 +8,3 @@ CREATE TABLE covid19.merged(
     cases int,
     status varchar(20)
 );
-
-#covid19.global_data

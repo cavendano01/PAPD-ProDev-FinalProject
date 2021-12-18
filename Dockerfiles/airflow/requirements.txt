@@ -1,4 +1,3 @@
-glob
 pandas
 structlog
 streamlit>=0.65.2
