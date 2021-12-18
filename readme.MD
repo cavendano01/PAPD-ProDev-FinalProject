@@ -13,8 +13,8 @@ Once active these are the URLS for accessing:
 
 ### AirFlow
 
-    `http://localhost:8080/`
+    http://localhost:8080/
 
 ### Streamlit
 
-    `http://localhost:8501/`
+    http://localhost:8501/
